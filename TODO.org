@@ -1,0 +1,16 @@
+#+TITLE: "Aegis IP Server Todo List"
+#+AUTHOR: "Josh Burns"
+
+* TODO Implement configuration targets
+** Host IP and Port 
+** Debug mode
+* TODO Implement protocol parsing and sending via the ~protocol~ crate
+* TODO Implement CLI proper interface
+* TODO Documentation
+* TODO Packet checking and verification
+* TODO Packet recive verification (send to client)
+* TODO Logging
+* TODO Dockerfile
+* TODO Makefile
+* TODO Split and abstract
+* TODO Testing
