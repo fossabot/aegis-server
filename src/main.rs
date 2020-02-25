@@ -32,17 +32,17 @@ async fn main() {
                     // many bytes were copied as a concurrent task.
                     tokio::spawn(async move {
                             // For debugging print whole socket
-                            println!("{}", sock);
+                            println!("{:#?}", sock);
                         
                             // Split up the reading and writing parts of the
                             // socket.
                             let (mut reader, mut writer) = sock.split();
                             
                             // For debugging print reader
-                            println!("{}", reader);
+                            println!("{:#?}", reader);
 
                             // For debugging print writer
-                            println!("{}", writer);
+                            println!("{:#?}", writer);
 
                         
                             match tokio::io::copy(&mut reader, &mut writer).await {
