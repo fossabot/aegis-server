@@ -4,6 +4,6 @@ use std::collections::HashSet;
 
 pub fn create_client(url: &str) -> Connection {
     let client = Client::open(url).unwrap();
-    let conn = client.get_connection().unwrap();
+    let mut conn = client.get_connection().unwrap();
     return conn;
 }
