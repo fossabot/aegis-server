@@ -7,18 +7,23 @@ use futures::stream::StreamExt;
 use std::str;
 use std::net::SocketAddr;
 
+mod redis;
+mod util;
+
 #[tokio::main]
 async fn main() {
     
     const SERVERADDRESS: &str = "127.0.0.1:6124";
     const SERVERLOG: &str =  "/var/log/aegisserver.log";
+    const REDISADDR: &str = "127.0.0.1:6379";
     
     let server: SocketAddr = SERVERADDRESS
         .parse()
         .expect("Unable to parse socket address");
     
     let mut listener = TcpListener::bind(server).await.unwrap();
-
+    let mut redis_client = redis.create_client(REDISADDR);
+    
     // Here we convert the `TcpListener` to a stream of incoming connections
     // with the `incoming` method.
     let server = {
