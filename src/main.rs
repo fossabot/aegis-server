@@ -13,8 +13,6 @@ async fn main() {
     // Get configuration settings
     let mut settings = config::Config::default();
     settings
-        // Add in `/etc/aegis/sever.toml`
-        .merge(File::from(Path::new("/etc/aegis/server.toml"))).unwrap()
         // Add in settings from the environment (with a prefix of AEGIS_SERVER)
         // Eg.. `AEGIS_SERVER_DEBUG=1 ./target/app` would set the `debug` key
         .merge(config::Environment::with_prefix("AEGIS_SERVER")).unwrap();
