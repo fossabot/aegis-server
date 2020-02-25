@@ -31,10 +31,20 @@ async fn main() {
                     // Spawn the future that echos the data and returns how
                     // many bytes were copied as a concurrent task.
                     tokio::spawn(async move {
+                            // For debugging print whole socket
+                            println!("{}", sock);
+                        
                             // Split up the reading and writing parts of the
                             // socket.
                             let (mut reader, mut writer) = sock.split();
+                            
+                            // For debugging print reader
+                            println!("{}", reader);
 
+                            // For debugging print writer
+                            println!("{}", writer);
+
+                        
                             match tokio::io::copy(&mut reader, &mut writer).await {
                                 Ok(amt) => {
                                     println!("wrote {} bytes", amt);
