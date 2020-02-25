@@ -5,6 +5,7 @@ use tokio::net::TcpListener;
 use tokio::prelude::*;
 use futures::stream::StreamExt;
 use std::str;
+use std::net::SocketAddr;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +13,11 @@ async fn main() {
     const SERVERADDRESS: str = "127.0.0.1:6124";
     const SERVERLOG: str =  "/var/log/aegisserver.log";
     
-    let mut listener = TcpListener::bind(SERVERADDRESS).await.unwrap();
+    let server: SocketAddr = SERVERADDRESS
+        .parse()
+        .expect("Unable to parse socket address");
+    
+    let mut listener = TcpListener::bind(server).await.unwrap();
 
     // Here we convert the `TcpListener` to a stream of incoming connections
     // with the `incoming` method.
@@ -45,7 +50,7 @@ async fn main() {
         }
     };
 
-    println!(format!("Server listening on {}", SERVERADDRESS));
+    println!("{}", format!("Server listening on {}", SERVERADDRESS));
 
     // Start the server and block this async fn until `server` spins down.
     server.await;
