@@ -1,12 +1,9 @@
 extern crate redis;
-use redis::Commands;
+use redis::{Client, Commands, Connection, RedisResult};
+use std::collections::HashSet;
 
-pub fn create_client(redis_url: &str) -> redis::Client {
-  let client = redis::Client::open(redis_url).unwrap();
-  return client;
-}
-
-fn fetch(client: redis::Client, key: &str) -> redis::RedisResult<&str> {
-    let mut con = client.get_connection()?;
-    return con.get(key);
+fn create_client(url: &str) -> Connection {
+    let client = Client::open(url).unwrap();
+    let conn = client.get_connection().unwrap();
+    return conn;
 }
