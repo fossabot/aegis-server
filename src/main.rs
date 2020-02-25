@@ -10,8 +10,8 @@ use std::net::SocketAddr;
 #[tokio::main]
 async fn main() {
     
-    const SERVERADDRESS: str = "127.0.0.1:6124";
-    const SERVERLOG: str =  "/var/log/aegisserver.log";
+    const SERVERADDRESS: &str = "127.0.0.1:6124";
+    const SERVERLOG: &str =  "/var/log/aegisserver.log";
     
     let server: SocketAddr = SERVERADDRESS
         .parse()
@@ -50,7 +50,7 @@ async fn main() {
         }
     };
 
-    println!("{}", format!("Server listening on {}", &SERVERADDRESS));
+    println!("{}", format!("Server listening on {}", SERVERADDRESS));
 
     // Start the server and block this async fn until `server` spins down.
     server.await;
