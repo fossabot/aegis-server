@@ -22,7 +22,7 @@ async fn main() {
         .expect("Unable to parse socket address");
     
     let mut listener = TcpListener::bind(server).await.unwrap();
-    let mut redis_client = redis.create_client(REDISADDR);
+    let mut redis_client = redis::create_client(REDISADDR);
     
     // Here we convert the `TcpListener` to a stream of incoming connections
     // with the `incoming` method.
