@@ -50,7 +50,7 @@ async fn main() {
         }
     };
 
-    println!("{}", format!("Server listening on {}", SERVERADDRESS));
+    println!("{}", format!("Server listening on {}", &SERVERADDRESS));
 
     // Start the server and block this async fn until `server` spins down.
     server.await;
