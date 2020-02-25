@@ -13,17 +13,19 @@ async fn main() {
     // Get configuration settings
     let mut settings = config::Config::default();
     settings
+        // Set configuration defaults
+        .set_default("host", "127.0.0.0.1:6142")
+        .set_default("logfile", "/var/log/aegis_server.log")
+        .set_default("debug", false)
         // Add in settings from the environment (with a prefix of AEGIS_SERVER)
         // Eg.. `AEGIS_SERVER_DEBUG=1 ./target/app` would set the `debug` key
         .merge(config::Environment::with_prefix("AEGIS_SERVER")).unwrap();
-
-    // Generate hashmap of settings
-    let settingsmap = settings.try_into::<HashMap<String, String>>().unwrap();
-
-    println!("{:?}", settingsmap);
-
-    let addr = "127.0.0.1:6142";
-    let mut listener = TcpListener::bind(addr).await.unwrap();
+    
+    let serverAddr = settings.get_str("host");
+    let serverLog = settings.get_str("logfile");
+    let debugB = settings.get_bool("debug");
+    
+    let mut listener = TcpListener::bind(serverAddr).await.unwrap();
 
     // Here we convert the `TcpListener` to a stream of incoming connections
     // with the `incoming` method.
@@ -56,7 +58,7 @@ async fn main() {
         }
     };
 
-    println!("Server running on localhost:6142");
+    println!(format!("Server listening on {}", serverAddr));
 
     // Start the server and block this async fn until `server` spins down.
     server.await;
