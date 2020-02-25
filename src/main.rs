@@ -4,12 +4,13 @@ extern crate futures;
 use tokio::net::TcpListener;
 use tokio::prelude::*;
 use futures::stream::StreamExt;
+use std::str;
 
 #[tokio::main]
 async fn main() {
     
-    const SERVERADDRESS = "127.0.0.1:6124";
-    const SERVERLOG =  "/var/log/aegisserver.log";
+    const SERVERADDRESS: str = "127.0.0.1:6124";
+    const SERVERLOG: str =  "/var/log/aegisserver.log";
     
     let mut listener = TcpListener::bind(SERVERADDRESS).await.unwrap();
 
