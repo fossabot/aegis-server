@@ -1,30 +1,28 @@
-extern crate tokio;
 extern crate futures;
+extern crate tokio;
 
-use tokio::net::TcpListener;
-use tokio::prelude::*;
 use futures::stream::StreamExt;
-use std::str;
 use std::net::SocketAddr;
+use std::str;
+use tokio::net::TcpListener;
+use tokio_util::codec::{BytesCodec, Decoder};
 
 mod redis;
 mod util;
 
 #[tokio::main]
 async fn main() {
-    
     const SERVERADDRESS: &str = "127.0.0.1:6124";
-    const SERVERLOG: &str =  "/var/log/aegisserver.log";
-    const REDISADDR: &str = "127.0.0.1:6379";
+    const SERVERLOG: &str = "/var/log/aegisserver.log";
     const DEBUG: bool = true;
-    
+
     let server: SocketAddr = SERVERADDRESS
         .parse()
         .expect("Unable to parse socket address");
-    
+
     let mut listener = TcpListener::bind(server).await.unwrap();
-    let mut redis_client = redis::create_client(REDISADDR);
-    
+    //let _redis_client = redis::create_client(REDISADDR);
+
     // Here we convert the `TcpListener` to a stream of incoming connections
     // with the `incoming` method.
     let server = {
@@ -34,26 +32,15 @@ async fn main() {
                 match conn {
                     Err(e) => eprintln!("accept failed = {:?}", e),
                     Ok(mut sock) => {
-                    // Spawn the future that echos the data and returns how
-                    // many bytes were copied as a concurrent task.
-                    tokio::spawn(async move {
-                            // Split up the reading and writing parts of the
-                            // socket.
-                            let (mut reader, mut writer) = sock.split();
-                            
-                            // in debug mode print extra stuff
-                            if DEBUG == true {
-                                println!("socket content: {:#?}", sock); 
-                                println!("reader content: {:#?}", reader);
-                                println!("writer content: {:#?}", writer);
-                            }
-                        
-                            match tokio::io::copy(&mut reader, &mut writer).await {
-                                Ok(amt) => {
-                                    println!("wrote {} bytes", amt);
-                                }
-                                Err(err) => {
-                                    eprintln!("IO error {:?}", err);
+                        // Spawn the future that echos the data and returns how
+                        // many bytes were copied as a concurrent task.
+                        tokio::spawn(async move {
+                            let mut framed = BytesCodec::new().framed(sock);
+
+                            while let Some(message) = framed.next().await {
+                                match message {
+                                    Ok(bytes) => println!("bytes: {:#?}", bytes),
+                                    Err(err) => println!("Socket closed with error: {:#?}", err),
                                 }
                             }
                         });
