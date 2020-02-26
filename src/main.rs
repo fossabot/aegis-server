@@ -1,5 +1,6 @@
 extern crate futures;
 extern crate tokio;
+#[macro_use] extern crate log;
 
 use futures::stream::StreamExt;
 use std::net::SocketAddr;
@@ -18,7 +19,7 @@ async fn main() {
         .parse()
         .expect("Unable to parse socket address");
 
-    let logger = logging::logger(SERVERLOG);
+    logging::logger(SERVERLOG);
     
     let mut listener = TcpListener::bind(server).await.unwrap();
 
@@ -30,17 +31,19 @@ async fn main() {
             while let Some(conn) = incoming.next().await {
                 match conn {
                     Err(e) => {
-                        //eprintln!("accept failed = {:?}", e),
-                    }
+                        //eprintln!("accept failed = {:?}", e);
+                        debug!("accept failed = {:?}", e);
+                    },
                     Ok(sock) => {
                         // Spawn the future that echos the data and returns how
                         // many bytes were copied as a concurrent task.
                         tokio::spawn(async move {
                             let mut framed = BytesCodec::new().framed(sock);
-
+                            debug!("Socket input");
+                            
                             while let Some(message) = framed.next().await {
                                 match message {
-                                    Ok(bytes) => println!("bytes: {:#?}", bytes),
+                                    Ok(bytes) => info!("{:#?}", bytes),
                                     Err(err) => println!("Socket closed with error: {:#?}", err),
                                 }
                             }
