@@ -9,6 +9,7 @@ use tokio::net::TcpListener;
 use tokio_util::codec::{BytesCodec, Decoder};
 
 mod logging;
+mod protocol;
 
 #[tokio::main]
 async fn main() {
@@ -31,7 +32,6 @@ async fn main() {
             while let Some(conn) = incoming.next().await {
                 match conn {
                     Err(e) => {
-                        //eprintln!("accept failed = {:?}", e);
                         debug!("accept failed = {:?}", e);
                     },
                     Ok(sock) => {
@@ -43,7 +43,11 @@ async fn main() {
                             
                             while let Some(message) = framed.next().await {
                                 match message {
-                                    Ok(bytes) => info!("{:#?}", bytes),
+                                    Ok(bytes) => {
+                                        info!("{:#?}", bytes);
+                                        msg = protocol::message_from_data(str::from_utf8(&bytes).unwrap());
+                                        println!("MESSAGE: {:#?}", msg);
+                                    },
                                     Err(err) => println!("Socket closed with error: {:#?}", err),
                                 }
                             }
