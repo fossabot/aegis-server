@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::*;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct Message {
     message_string: String,
     timestamp: String,
