@@ -19,7 +19,8 @@ async fn main() {
         .expect("Unable to parse socket address");
 
     let logger = logging::logger(SERVERLOG);
-
+    logger::init;
+    
     let mut listener = TcpListener::bind(server).await.unwrap();
 
     // Here we convert the `TcpListener` to a stream of incoming connections
