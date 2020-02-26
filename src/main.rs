@@ -7,6 +7,8 @@ use std::str;
 use tokio::net::TcpListener;
 use tokio_util::codec::{BytesCodec, Decoder};
 
+mod logging;
+
 #[tokio::main]
 async fn main() {
     const SERVERADDRESS: &str = "127.0.0.1:6124";
@@ -15,6 +17,8 @@ async fn main() {
     let server: SocketAddr = SERVERADDRESS
         .parse()
         .expect("Unable to parse socket address");
+
+    let logger = logging::logger(SERVERLOG);
 
     let mut listener = TcpListener::bind(server).await.unwrap();
 
@@ -25,8 +29,10 @@ async fn main() {
             let mut incoming = listener.incoming();
             while let Some(conn) = incoming.next().await {
                 match conn {
-                    Err(e) => eprintln!("accept failed = {:?}", e),
-                    Ok(mut sock) => {
+                    Err(e) => {
+                        //eprintln!("accept failed = {:?}", e),
+                    }
+                    Ok(sock) => {
                         // Spawn the future that echos the data and returns how
                         // many bytes were copied as a concurrent task.
                         tokio::spawn(async move {
