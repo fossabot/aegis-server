@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::*;
 
 #[derive(Serialize, Deserialize, Debug)]
-struct Message {
+pub struct Message {
     message_string: String,
     timestamp: String,
     is_test: bool,
