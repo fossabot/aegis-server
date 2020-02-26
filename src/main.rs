@@ -7,21 +7,16 @@ use std::str;
 use tokio::net::TcpListener;
 use tokio_util::codec::{BytesCodec, Decoder};
 
-mod redis;
-mod util;
-
 #[tokio::main]
 async fn main() {
     const SERVERADDRESS: &str = "127.0.0.1:6124";
     const SERVERLOG: &str = "/var/log/aegisserver.log";
-    const DEBUG: bool = true;
 
     let server: SocketAddr = SERVERADDRESS
         .parse()
         .expect("Unable to parse socket address");
 
     let mut listener = TcpListener::bind(server).await.unwrap();
-    //let _redis_client = redis::create_client(REDISADDR);
 
     // Here we convert the `TcpListener` to a stream of incoming connections
     // with the `incoming` method.
