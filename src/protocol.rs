@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
-use serde_json::Result;
+#[macro_use] use serde::{Deserialize, Serialize};
+use serde_json::*;
 
 #[derive(Serialize, Deserialize)]
 struct Message {
