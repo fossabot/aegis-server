@@ -45,7 +45,7 @@ async fn main() {
                                 match message {
                                     Ok(bytes) => {
                                         info!("{:#?}", bytes);
-                                        msg = protocol::message_from_data(str::from_utf8(&bytes).unwrap());
+                                        msg = protocol::message_from_data(&bytes);
                                         println!("MESSAGE: {:#?}", msg);
                                     },
                                     Err(err) => println!("Socket closed with error: {:#?}", err),
