@@ -21,7 +21,7 @@ pub fn message_from_data(data: &[u8]) -> Message {
 }
 
 pub fn parse_message_string(msg: Message) -> MessageString {
-    let mut msg_split = Message.message_string.split("-").collect();
+    let mut msg_split = msg.message_string.split("-").collect();
     let msgstr = MessageString {
         client_code: msg_split[0],
         alarm_event_code: msg_split[1],
