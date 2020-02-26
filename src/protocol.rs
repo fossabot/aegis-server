@@ -10,9 +10,9 @@ pub struct Message {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct MessageString {
-    client_code: String,
-    alarm_event_code: String,
-    handshake_code: String,
+    client_code: &str,
+    alarm_event_code: &str,
+    handshake_code: &str,
 }
 
 pub fn message_from_data(data: &[u8]) -> Message {
