@@ -10,9 +10,9 @@ pub struct Message {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct MessageString {
-    client_code: &str,
-    alarm_event_code: &str,
-    handshake_code: &str,
+    client_code: String,
+    alarm_event_code: String,
+    handshake_code: String,
 }
 
 pub fn message_from_data(data: &[u8]) -> Message {
@@ -23,9 +23,9 @@ pub fn message_from_data(data: &[u8]) -> Message {
 pub fn parse_message_string(msg: Message) -> MessageString {
     let mut msg_split: Vec<&str> = msg.message_string.split("-").collect();
     let msgstr = MessageString {
-        client_code: msg_split[0],
-        alarm_event_code: msg_split[1],
-        handshake_code: msg_split[2]
+        client_code: msg_split[0].to_string(),
+        alarm_event_code: msg_split[1].to_string(),
+        handshake_code: msg_split[2].to_string()
     };
     
     return msgstr;
