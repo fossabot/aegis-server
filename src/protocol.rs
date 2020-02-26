@@ -9,6 +9,6 @@ struct Message {
 }
 
 pub fn message_from_data(data: &[u8]) -> Message {
-  let v: Message = serde_json::from_slice(data);
+  let v: Message = serde_json::from_slice(data).unwrap();
   return v;
 }
