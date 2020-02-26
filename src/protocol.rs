@@ -8,7 +8,7 @@ struct Message {
     is_test: bool,
 }
 
-pub fn message_from_data(data: &str) -> Message {
-  let v: Message = serde_json::from_str(data);
+pub fn message_from_data(data: &[u8]) -> Message {
+  let v: Message = serde_json::from_slice(data);
   return v;
 }
