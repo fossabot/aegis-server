@@ -16,6 +16,7 @@ async fn main() {
     const SERVERADDRESS: &str = "127.0.0.1:6124";
     const SERVERLOG: &str =  "/var/log/aegisserver.log";
     const REDISADDR: &str = "127.0.0.1:6379";
+    const DEBUG: bool = true;
     
     let server: SocketAddr = SERVERADDRESS
         .parse()
@@ -36,19 +37,16 @@ async fn main() {
                     // Spawn the future that echos the data and returns how
                     // many bytes were copied as a concurrent task.
                     tokio::spawn(async move {
-                            // For debugging print whole socket
-                            println!("{:#?}", sock);
-                        
                             // Split up the reading and writing parts of the
                             // socket.
                             let (mut reader, mut writer) = sock.split();
                             
-                            // For debugging print reader
-                            println!("{:#?}", reader);
-
-                            // For debugging print writer
-                            println!("{:#?}", writer);
-
+                            // in debug mode print extra stuff
+                            if DEBUG == true {
+                                println!("socket content: {:#?}", sock); 
+                                println!("reader content: {:#?}", reader);
+                                println!("writer content: {:#?}", writer);
+                            }
                         
                             match tokio::io::copy(&mut reader, &mut writer).await {
                                 Ok(amt) => {
