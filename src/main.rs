@@ -10,13 +10,17 @@ use tokio_util::codec::{BytesCodec, Decoder};
 
 mod logging;
 mod protocol;
+mod configuration;
 
 #[tokio::main]
 async fn main() {
-    const SERVERADDRESS: &str = "127.0.0.1:6124";
+    // Load config
+    let conf = configuration::parse_config();
+    let server_ip: &str = &conf.ip;
+    
     const SERVERLOG: &str = "/var/log/aegisserver.log";
-
-    let server: SocketAddr = SERVERADDRESS
+    
+    let server: SocketAddr = server_ip
         .parse()
         .expect("Unable to parse socket address");
 
@@ -60,7 +64,7 @@ async fn main() {
         }
     };
 
-    println!("{}", format!("Server listening on {}", SERVERADDRESS));
+    println!("{}", format!("Server listening on {}", server_ip));
 
     // Start the server and block this async fn until `server` spins down.
     server.await;
