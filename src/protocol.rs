@@ -20,7 +20,7 @@ pub fn message_from_data(data: &[u8]) -> Message {
   return v;
 }
 
-pub fn parse_message_string(msg: Message) -> MessageString {
+pub fn parse_message_string(msg: &Message) -> MessageString {
     let mut msg_split: Vec<&str> = msg.message_string.split("-").collect();
     let msgstr = MessageString {
         client_code: msg_split[0].to_string(),
