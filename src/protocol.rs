@@ -38,3 +38,19 @@ pub fn validate_handshake(msgstr: &MessageString, handshake: &str) -> bool {
         return true;
     }
 }
+
+pub fn validate_alarm_event_code(msgstr: &MessageString) -> bool {
+    if msgtsr.alarm_event_code.char().count() != 5 {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+pub fn validate_client_code(msgstr: &MessageString) -> bool {
+    if msgtsr.client_code.char().count() != 16 {
+        return false;
+    } else {
+        return true;
+    }
+}
