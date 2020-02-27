@@ -30,3 +30,11 @@ pub fn parse_message_string(msg: &Message) -> MessageString {
     
     return msgstr;
 }
+
+pub fn validate_handshake(msgstr: &MessageString, handshake: &str) -> bool {
+    if msgstr.handshake != handshake {
+        return false;
+    } else {
+        return true;
+    }
+}
