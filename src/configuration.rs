@@ -11,6 +11,6 @@ pub struct Config {
 
 pub fn parse_config() -> Config {
     let conffile = fs::read_to_string("/etc/aegis.toml").unwrap();
-    let config: Config = toml::from_str(conffile).unwrap();
+    let config: Config = toml::from_str(&conffile).unwrap();
     return config;
 }
