@@ -4,7 +4,6 @@ use std::fs;
 #[derive(Deserialize)]
 pub struct Config {
     ip: String,
-    port: Option<u16>,
     debug: bool,
     handshake: Option<u16>,
     redis: String,
