@@ -40,7 +40,7 @@ pub fn validate_handshake(msgstr: &MessageString, handshake: &str) -> bool {
 }
 
 pub fn validate_alarm_event_code(msgstr: &MessageString) -> bool {
-    if msgstr.alarm_event_code.char().count() != 5 {
+    if msgstr.alarm_event_code.chars().count() != 5 {
         return false;
     } else {
         return true;
@@ -48,7 +48,7 @@ pub fn validate_alarm_event_code(msgstr: &MessageString) -> bool {
 }
 
 pub fn validate_client_code(msgstr: &MessageString) -> bool {
-    if msgstr.client_code.char().count() != 16 {
+    if msgstr.client_code.chars().count() != 16 {
         return false;
     } else {
         return true;
