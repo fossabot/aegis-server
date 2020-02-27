@@ -32,7 +32,7 @@ pub fn parse_message_string(msg: &Message) -> MessageString {
 }
 
 pub fn validate_handshake(msgstr: &MessageString, handshake: &str) -> bool {
-    if msgstr.handshake != handshake {
+    if msgstr.handshake_code != handshake {
         return false;
     } else {
         return true;
