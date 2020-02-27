@@ -30,25 +30,3 @@ pub fn parse_message_string(msg: Message) -> MessageString {
     
     return msgstr;
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    
-    let test_data = b"{
-            \"message_string\": \"00000000000001773-00100-22\",
-            \"timestamp\": \"2014-07-08T09:10:11Z\",
-            \"is_test\": true
-    }";
-    
-    let valid_msg = Message {
-        message_string: "00000000000001773-00100-22",
-        timestamp: "2014-07-08T09:10:11Z",
-        is_test: true,
-    };
-    
-    #[test]
-    fn test_message_from_data() {
-        asset_eq!(message_from_data(test_data), valid_msg);
-    }
-}
