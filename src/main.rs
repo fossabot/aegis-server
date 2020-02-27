@@ -50,7 +50,7 @@ async fn main() {
                                     Ok(bytes) => {
                                         info!("{:#?}", bytes);
                                         let msg = protocol::message_from_data(&bytes);
-                                        let msgstr = protocol::parse_message_string(msg);
+                                        let msgstr = protocol::parse_message_string(&msg);
                                         println!("MESSAGE: {:#?}", msg);
                                         println!("MESSAGE STRING: {:#?}", msgstr);
                                     },
