@@ -3,10 +3,10 @@ use std::fs;
 
 #[derive(Deserialize)]
 pub struct Config {
-    ip: String,
-    debug: bool,
-    handshake: Option<u16>,
-    redis: String,
+    pub ip: String,
+    pub debug: bool,
+    pub handshake: Option<u16>,
+    pub redis: String,
 }
 
 pub fn parse_config() -> Config {
