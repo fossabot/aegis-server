@@ -1,14 +1,14 @@
 use serde::{Deserialize, Serialize};
 use serde_json;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Message {
     message_string: String,
     timestamp: String,
     is_test: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct MessageString {
     client_code: String,
     alarm_event_code: String,
