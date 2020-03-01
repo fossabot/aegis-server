@@ -1,4 +1,7 @@
 # Aegis IP Server
+![Rust](https://github.com/aegisip/aegis-server/workflows/Rust/badge.svg)
+
+
 Receiver and middleware server for the Aegis IP protocol.
 
 __WIP__
