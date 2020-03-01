@@ -4,7 +4,9 @@ use std::fs;
 #[derive(Deserialize)]
 pub struct Redis {
     pub host: String,
-    pub channel: String
+    pub channel: String,
+    pub user: String,
+    pub password: String,
 }
 
 #[derive(Deserialize)]
